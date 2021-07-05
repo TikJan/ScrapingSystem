@@ -1,6 +1,24 @@
 {
+  "name": "ScrapingWebSite",
+  "version": "1.0.0",
+  "description": "ScrapingSystem is a Node.js application for scraping website links with status codes in output.",
+  "main": "index.js",
   "dependencies": {
     "cheerio": "*",
     "got": "^11.8.2"
-  }
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TikJan/ScrapingWebSite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TikJan/ScrapingWebSite/issues"
+  },
+  "homepage": "https://github.com/TikJan/ScrapingWebSite#readme"
 }

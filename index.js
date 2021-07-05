@@ -2,17 +2,21 @@ const got = require('got');
 const cheerio = require('cheerio');
 
 
-const startURL = 'https://hexact.io';
+const startURL = process.env.START_URL || 'https://hexact.io';
 const links = new Set();
 links.add(startURL);
 const urlMap = new Map();
 
+const outputProcessor = (url, statusCode) => {
+    console.log('{url: ' + url + ', status: ' + statusCode + '}');
+    let value = urlMap.get(statusCode) || 0;
+    urlMap.set(statusCode, ++value);
+}
+
 const extractLinks = async (url) => {
     try {
         const response = await got(url);
-        console.log('{url: ' + url + ', status: ' + response.statusCode + '}');
-        let value = urlMap.get(response.statusCode) || 0;
-        urlMap.set(response.statusCode, ++value);
+        outputProcessor(url, response.statusCode);
 
         if (!url.includes(startURL)) {
             return;
@@ -31,9 +35,7 @@ const extractLinks = async (url) => {
         });
     } catch (err) {
         if (err.response && err.response.statusCode) {
-            console.log('{url: ' + url + ', status: ' + err.response.statusCode + '}');
-            let value = urlMap.get(err.response.statusCode) || 0;
-            urlMap.set(err.response.statusCode, ++value);
+            outputProcessor(url, err.response.statusCode);
         } else {
             console.log(err);
         }
